@@ -1,0 +1,7 @@
+<include>
+  <extension name="all_income">
+    <condition field="destination_number" expression="^.+$">
+	<action application='hangup' data='NORMAL_TEMPORARY_FAILURE'/>
+    </condition>
+  </extension>
+</include>

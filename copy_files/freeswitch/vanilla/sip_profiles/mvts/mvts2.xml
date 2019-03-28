@@ -1,0 +1,10 @@
+<include>
+ <gateway name="mvts2">
+    <param name="proxy" value="91.106.204.102"/>
+    <param name="register" value="false"/>
+    <param name="caller-id-in-from" value="true"/>
+    <param name="ping" value="50"/>
+    <param name="inbound-proxy-media" value="false"/>
+    <param name="extension-in-contact" value="true"/>
+ </gateway>
+</include>

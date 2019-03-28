@@ -1,0 +1,18 @@
+<include>
+  <extension name="all_income_public">
+    <condition field="destination_number" expression="^190326#(.+)$">
+        <action application='log' data='ERR start ${destination_number}'/>
+        <action application='set' data='fs_ip=172.10.0.3'/>
+        <action application='set' data='fs_port=6678'/>
+        <action application='set' data='sip-force-contact=NDLB-connectile-dysfunction'/>
+        <action application='set' data='session_in_hangup_hook=true'/>
+        <action application='set' data='bypass_media=false'/>
+        <action application='set' data='proxy_media=true'/>
+        <action application='set' data='hangup_after_bridge=true'/>
+        <action application='bridge' data='{sip_cid_type=none}sofia/localnet/190326#${1}@${fs_ip}:${fs_port}'/>
+	<action application='hangup' data='NORMAL_TEMPORARY_FAILURE'/>
+    </condition>
+  </extension>
+</include>
+
+

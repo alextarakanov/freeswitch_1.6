@@ -1,0 +1,123 @@
+version: '2.4'
+
+networks:
+ fsnet:
+  name: ${FS_NETWORK_NAME}
+  driver: bridge
+  driver_opts:
+   com.docker.network.bridge.name: ${FS_NETWORK_NAME}
+  ipam:
+   config:
+    - subnet: ${FS_DOCKER_SUBNET}
+      gateway: ${FS_DOCKER_GW}
+
+########################################################################################################################
+########################################################################################################################
+########################################################################################################################
+services:
+ mainfs:
+  env_file:
+   - ./security/mainfs.env
+   - ./.env
+  privileged: true
+  container_name: ${MAINFS_NAME}
+  hostname: ${MAINFS_NAME}
+  working_dir: /usr/local/freeswitch/conf/main
+  networks: 
+   fsnet:
+    ipv4_address: ${MAINFS_DOCKER_LOCALNET_IP}
+  image: ${IMAGE_VERSION_FS}:${TAG_VERSION_FS}
+  volumes:
+   - ./copy_files/start_main.sh:/start_main.sh:ro
+   - ./copy_files:/copy_files/:ro
+  ports:
+   - ${MAINFS_DOCKER_EXTNET_SIP_PORT}:${MAINFS_HOST_SIP_PORT}/udp
+  entrypoint: [ "/start_main.sh" ]
+  command: [""]
+########################################################################################################################
+########################################################################################################################
+########################################################################################################################
+ fs1:
+  env_file: 
+   - ./security/fs1.env
+   - ./.env
+  environment:
+   - FS_IP=172.10.0.3
+   - FS_EXTNET_SIP_PORT=5060
+   - FS_LOCALNET_SIP_PORT=6678
+   - FS_START_RTP=30000
+   - FS_STOP_RTP=32000
+  privileged: true
+  container_name: fs1
+  hostname: fs1
+  networks:
+   fsnet:
+    ipv4_address: 172.10.0.3
+  image: ${IMAGE_VERSION_FS}:${TAG_VERSION_FS}
+  working_dir: /usr/local/freeswitch/conf/extend/sip_profiles/external
+  volumes:
+   - ./copy_files/start_extend.sh:/start_extend.sh:ro
+   - ./copy_files:/copy_files/:ro
+  entrypoint: [ "/start_extend.sh" ]
+  command: [""]
+########################################################################################################################
+########################################################################################################################
+########################################################################################################################
+ fs2:
+  privileged: true
+  env_file:
+   - ./security/fs2.env
+   - ./.env
+  environment:
+  - FS_IP=172.10.0.4
+  - FS_EXTNET_SIP_PORT=5060
+  - FS_LOCALNET_SIP_PORT=6678
+  - FS_START_RTP=30000
+  - FS_STOP_RTP=32000
+  container_name: fs2
+  hostname: fs2
+  networks:
+   fsnet:
+    ipv4_address: 172.10.0.4
+  image: ${IMAGE_VERSION_FS}:${TAG_VERSION_FS}
+  working_dir: /usr/local/freeswitch/conf/extend/sip_profiles/external
+  volumes:
+   - ./copy_files/start_extend.sh:/start_extend.sh:ro
+   - ./copy_files:/copy_files/:ro
+  entrypoint: [ "/start_extend.sh" ]
+  command: [""]
+
+ php:
+  env_file: .env
+  image: yiisoftware/yii2-php:7.1-apache
+  container_name: ${NAME_APACHE}
+  hostname: ${NAME_APACHE}
+  volumes:
+   - ./app:/app
+  ports:
+   - '8000:80'
+  networks: 
+   fsnet:
+    ipv4_address: ${IP_APACHE}      
+
+ db:
+  env_file:
+   - ./security/db.env
+   - ./.env
+  container_name: ${NAME_MYSQL}
+  hostname: ${NAME_MYSQL}
+  image: mysql:5.7
+  volumes:
+   - ./db_data:/var/lib/mysql
+  restart: always
+  networks: 
+   fsnet:
+    ipv4_address: ${IP_MYSQL}
+  ports:
+   - 3308:3306/tcp
+
+
+    
+
+
+
