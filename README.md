@@ -43,5 +43,3 @@ MAINFS_HOST_EXTNET_IP=1.2.3.4
 
 get  docker container  
 docker push cr80/fs16:v8
-
-
