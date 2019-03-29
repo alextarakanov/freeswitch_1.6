@@ -1,35 +1,19 @@
 # freeswitch_1.6
 
-echo '
-MYSQL_ROOT_PASSWORD=pwd
-MYSQL_DATABASE=fs
-MYSQL_USER=fsuser
-MYSQL_PASSWORD=fs_pwd
-' > /security/db.env
+TESTING
+-------
 
-add f1 env
+Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](http://codeception.com/).
+By default there are 3 test suites:
 
-` echo '
-FS_EXTNET_IP=1.2.3.4
-FS_SIP_LOGIN=login1
-FS_SIP_NUMBER=33443322
-FS_SIP_PASSWD=pwd1
-FS_UA=Linksys/SPA901-5.1.5
-'>  /security/fs1.env
-`
-add f2 env
+- `unit`
+- `functional`
+- `acceptance`
 
-` echo '
-FS_EXTNET_IP=1.2.3.4
-FS_SIP_LOGIN=login2
-FS_SIP_NUMBER=33443322
-FS_SIP_PASSWD=pwd2
-FS_UA=Linksys/SPA901-5.1.5
-'>  /security/fs1.env
-`
-add main freeswitch
-` echo '
-MAINFS_HOST_EXTNET_IP=1.2.3.4
-' > /security/mainfs.env
-`
+
+
+##add mysql env  
+
+
+
 
