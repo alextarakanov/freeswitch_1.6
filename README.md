@@ -1,12 +1,12 @@
 # freeswitch_1.6
 
-` echo '
+echo '
 MYSQL_ROOT_PASSWORD=pwd
 MYSQL_DATABASE=fs
 MYSQL_USER=fsuser
 MYSQL_PASSWORD=fs_pwd
 ' > /security/db.env
-`
+
 add f1 env
 
 ` echo '
