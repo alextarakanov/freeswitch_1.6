@@ -14,6 +14,7 @@
   </domains>
 
   <settings>
+    <param name="bind-params" value="transport=udp"/>
     <param name="debug" value="0"/>
     <param name="sip-trace" value="no"/>
     <param name="sip-capture" value="no"/>
@@ -33,6 +34,9 @@
 <!-- ######################################################### -->
 <!-- ######################################################### -->
 <!-- ######################################################### -->
+    <param name="nat-options-ping" value="true"/>
+    <param name="NDLB-force-rport" value="true"/>
+
 
     <param name="apply-inbound-acl" value="docker_extend_net"/>
     <param name="apply-register-acl" value="docker_extend_net"/>
@@ -45,7 +49,7 @@
     <param name="inbound-codec-prefs" value="$${global_codec_prefs}"/>
     <param name="outbound-codec-prefs" value="$${outbound_codec_prefs}"/>
     <param name="rtp-ip" value="$${external_rtp_ip}"/>
-    <param name="sip-ip" value="$${external_rtp_ip}"/>
+    <param name="sip-ip" value="$${external_sip_ip}"/>
     <param name="ext-rtp-ip" value="$${external_rtp_ip_ext}"/>
     <param name="ext-sip-ip" value="$${external_sip_ip_ext}"/>
 

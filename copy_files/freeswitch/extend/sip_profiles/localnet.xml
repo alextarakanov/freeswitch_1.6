@@ -11,6 +11,7 @@
   </domains>
 
   <settings>
+    <param name="bind-params" value="transport=udp"/>
     <param name="debug" value="0"/>
     <param name="sip-trace" value="no"/>
     <param name="sip-capture" value="no"/>

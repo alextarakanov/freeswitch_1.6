@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 CONTAINER_IP=`/bin/hostname -i`
 FS_DIR='/usr/local/freeswitch/conf'
 
@@ -22,11 +22,9 @@ echo "
 <X-PRE-PROCESS cmd=\"set\" data=\"localnet_sip_ip=$MAINFS_DOCKER_LOCALNET_IP\"/>
 <X-PRE-PROCESS cmd=\"set\" data=\"localnet_sip_port=$MAINFS_DOCKER_LOCALNET_SIP_PORT\"/>
 <X-PRE-PROCESS cmd=\"set\" data=\"localnet-user-agent-string=$UA\"/>
-" > $FS_DIR/include/vars.xml
+<X-PRE-PROCESS cmd=\"set\" data=\"domain=$MAINFS_DOCKER_LOCALNET_IP\"/>
 
-echo "<param name="rtp-start-port" value=\"$MAINFS_START_RTP\"/>
-<param name="rtp-end-port" value=\"$MAINFS_STOP_RTP\"/>
-" > $FS_DIR/include/switch.conf.xml
+" > $FS_DIR/include/vars.xml
 
 
 echo "
@@ -39,7 +37,17 @@ USER=$MYSQL_USER
 PASSWORD=$MYSQL_PASSWORD
 " > /etc/odbc.ini
 
-sed -i "s/\"odbc:\/\/freeswitch\"/\"odbc:\/\/$MYSQL_DATABASE\"/" /usr/local/freeswitch/conf/main/autoload_configs/odbc_cdr.xml
+
+sed -i "s/\"odbc:\/\/freeswitch\"/\"odbc:\/\/$MYSQL_DATABASE\"/" $FS_DIR/main/autoload_configs/odbc_cdr.xml
+
+
+#<param name="rtp-start-port" value="18000"/>
+#<param name="rtp-end-port" value="20000"/>
+#echo "<param name="rtp-start-port" value=\"$MAINFS_START_RTP\"/>
+#<param name="rtp-end-port" value=\"$MAINFS_STOP_RTP\"/>
+#" > $FS_DIR/include/switch.conf.xml
+sed -i "s/<param name=\"rtp-start-port\" value=\"18000\"\/>/<param name=\"rtp-start-port\" value=\"$MAINFS_START_RTP\"\/>/" $FS_DIR/main/autoload_configs/switch.conf.xml
+sed -i "s/<param name=\"rtp-end-port\" value=\"20000\"\/>/<param name=\"rtp-end-port\" value=\"$MAINFS_STOP_RTP\"\/>/" $FS_DIR/main/autoload_configs/switch.conf.xml
 
 service snmpd start &&
 service freeswitch start &&

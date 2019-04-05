@@ -13,6 +13,7 @@
   </domains>
 
   <settings>
+    <param name="bind-params" value="transport=udp"/>
     <param name="debug" value="0"/>
     <param name="sip-trace" value="no"/>
     <param name="sip-capture" value="no"/>
@@ -32,6 +33,9 @@
 <!-- ######################################################### -->
 <!-- ######################################################### -->
 <!-- ######################################################### -->
+    <param name="nat-options-ping" value="true"/>
+    <param name="NDLB-force-rport" value="true"/>
+
 
     <param name="sip-port" value="$${external_sip_port}"/>
     <param name="user-agent-string" value="$${external-user-agent-string}"/>

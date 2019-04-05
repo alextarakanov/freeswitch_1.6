@@ -1,4 +1,5 @@
 <include>
+
   <!-- Preprocessor Variables
        These are introduced when configuration strings must be consistent across modules. 
        NOTICE: YOU CAN NOT COMMENT OUT AN X-PRE-PROCESS line, Remove the line instead.
@@ -281,41 +282,6 @@
   -->
   <X-PRE-PROCESS cmd="set" data="bind_server_ip=auto"/>
 
-  <!-- NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE
-       
-       If you're going to load test FreeSWITCH please input real IP addresses
-       for external_rtp_ip and external_sip_ip
-  -->
-
-  <!-- external_rtp_ip
-       Can be an one of:
-           ip address: "12.34.56.78"
-           a stun server lookup: "stun:stun.server.com"
-           a DNS name: "host:host.server.com"
-       where fs.mydomain.com is a DNS A record-useful when fs is on
-       a dynamic IP address, and uses a dynamic DNS updater.
-       If unspecified, the bind_server_ip value is used.
-       Used by: sofia.conf.xml dingaling.conf.xml
-  -->
-<!--  <X-PRE-PROCESS cmd="set" data="external_rtp_ip=stun:stun.freeswitch.org"/> -->
-<!--   <X-PRE-PROCESS cmd="set" data="external_rtp_ip=192.168.16.62"/> -->
-
-  <!-- external_sip_ip
-      Used as the public IP address for SDP.
-       Can be an one of:
-           ip address: "12.34.56.78"
-           a stun server lookup: "stun:stun.server.com"
-           a DNS name: "host:host.server.com"
-       where fs.mydomain.com is a DNS A record-useful when fs is on
-       a dynamic IP address, and uses a dynamic DNS updater.
-       If unspecified, the bind_server_ip value is used.
-       Used by: sofia.conf.xml dingaling.conf.xml
-  -->
-<!--   <X-PRE-PROCESS cmd="set" data="external_sip_ip=stun:stun.freeswitch.org"/> -->
-<!--   <X-PRE-PROCESS cmd="set" data="external_sip_ip=192.168.16.62"/> -->
-  <!-- unroll-loops
-       Used to turn on sip loopback unrolling.
-  --> 
 <!-- ################################################################### -->
 <!-- ################################################################### -->
 <!-- ################################################################### -->
@@ -325,6 +291,11 @@
 <!-- ################################################################### -->
 <!-- ################################################################### -->
 <!-- ################################################################### -->
+
+
+  <!-- unroll-loops
+       Used to turn on sip loopback unrolling.
+  --> 
 
 
   <X-PRE-PROCESS cmd="set" data="unroll_loops=true"/>
