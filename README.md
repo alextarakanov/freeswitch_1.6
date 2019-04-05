@@ -31,7 +31,7 @@ FS_SIP_LOGIN=login2
 FS_SIP_NUMBER=33443322
 FS_SIP_PASSWD=pwd2
 FS_UA=Linksys/SPA901-5.1.5
-'>  /security/fs1.env
+'>  /security/fs2.env
 ```
 
 add main freeswitch
