@@ -1,6 +1,5 @@
 <profile name="localnet">
   <gateways>
-    <X-PRE-PROCESS cmd="include" data="localnet/*.xml"/>
   </gateways>
   <aliases>
     <!--

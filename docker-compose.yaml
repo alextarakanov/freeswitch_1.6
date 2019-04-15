@@ -12,12 +12,13 @@ networks:
       gateway: ${FS_DOCKER_GW}
 
 ########################################################################################################################
-########################################################################################################################
+#######################################################################################################################
 ########################################################################################################################
 services:
  mainfs:
   env_file:
    - ./security/mainfs.env
+   - ./security/db.env
    - ./.env
   privileged: true
   container_name: ${MAINFS_NAME}
@@ -30,6 +31,7 @@ services:
   volumes:
    - ./copy_files/start_main.sh:/start_main.sh:ro
    - ./copy_files:/copy_files/:ro
+   - ./odbc:/odbc/:ro
   ports:
    - ${MAINFS_DOCKER_EXTNET_SIP_PORT}:${MAINFS_HOST_SIP_PORT}/udp
   entrypoint: [ "/start_main.sh" ]
@@ -117,7 +119,8 @@ services:
 ########################################################################################################################
  php:
   env_file: .env
-  image: yiisoftware/yii2-php:7.1-apache
+  # image: yiisoftware/yii2-php:7.1-apache
+  image: yii2-7.1-apache:v1
   container_name: ${NAME_APACHE}
   hostname: ${NAME_APACHE}
   volumes:
@@ -144,8 +147,18 @@ services:
   ports:
    - 3308:3306/tcp
 
-
-    
-
-
+ esl:
+  env_file: .env
+  image: cr80/php-esl:zte_v3
+  container_name: ${NAME_ESL}
+  hostname: ${NAME_ESL}
+  working_dir: /
+  volumes:
+   - ./copy_files/start_esl.sh:/start_esl.sh:ro
+   - ./esl:/esl:ro
+  networks: 
+   fsnet:
+    ipv4_address: ${IP_ESL}
+  entrypoint: ['']
+  command: ['/start_esl.sh']
 

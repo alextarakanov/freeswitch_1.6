@@ -4,7 +4,7 @@ FS_DIR='/usr/local/freeswitch/conf'
 
 #apt-get install -y net-tools sngrep tcpdump mc inetutils-ping &&
 rm  -Rf $FS_DIR/ &&
-cp -Rf /copy_files/freeswitch  $FS_DIR &&        
+cp -Rf /copy_files/freeswitch  $FS_DIR &&
 mkdir -p $FS_DIR/include  &&
 mkdir -p /root/.config/mc &&
 
@@ -26,10 +26,9 @@ echo "
 
 " > $FS_DIR/include/vars.xml
 
-
 echo "
 [$MYSQL_DATABASE]
-Driver=MySQL
+Driver=FSMYSQL
 SERVER=$IP_MYSQL
 PORT=3306
 DATABASE=$MYSQL_DATABASE
@@ -38,16 +37,24 @@ PASSWORD=$MYSQL_PASSWORD
 " > /etc/odbc.ini
 
 
+echo "
+[FSMYSQL]
+Description=ODBC for MySQL (FreeSwitch)
+Driver=/odbc/libmyodbc5a.so
+Setup=/odbc/libmyodbc5S.so
+FileUsage=1
+" >> /etc/odbcinst.ini
+
 sed -i "s/\"odbc:\/\/freeswitch\"/\"odbc:\/\/$MYSQL_DATABASE\"/" $FS_DIR/main/autoload_configs/odbc_cdr.xml
 
 
-#<param name="rtp-start-port" value="18000"/>
-#<param name="rtp-end-port" value="20000"/>
-#echo "<param name="rtp-start-port" value=\"$MAINFS_START_RTP\"/>
-#<param name="rtp-end-port" value=\"$MAINFS_STOP_RTP\"/>
-#" > $FS_DIR/include/switch.conf.xml
 sed -i "s/<param name=\"rtp-start-port\" value=\"18000\"\/>/<param name=\"rtp-start-port\" value=\"$MAINFS_START_RTP\"\/>/" $FS_DIR/main/autoload_configs/switch.conf.xml
 sed -i "s/<param name=\"rtp-end-port\" value=\"20000\"\/>/<param name=\"rtp-end-port\" value=\"$MAINFS_STOP_RTP\"\/>/" $FS_DIR/main/autoload_configs/switch.conf.xml
+
+sed -i "s/172.10.0.1:44445/${IP_ESL}:${PORT_ESL}/" $FS_DIR/main/dialplan/external/190326_unitel.xml
+
+# sed -i "s/127.0.0.1/$MAINFS_DOCKER_LOCALNET_IP/" $FS_DIR/main/autoload_configs/event_socket.conf.xml
+# sed -i "s/ClueCon/$PWDFS/" $FS_DIR/main/autoload_configs/event_socket.conf.xml
 
 service snmpd start &&
 service freeswitch start &&

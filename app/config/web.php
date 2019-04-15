@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'SipLine',
+    'name' => 'unite',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -49,7 +49,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'sipline/index',
+                '' => 'unite/index',
             ],
         ],
 
@@ -63,7 +63,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        'allowedIPs' => ['127.0.0.1', '172.10.0.254', '::1'],
+        'allowedIPs' => ['91.106.201.242', '::1'],
     ];
 //    $config['modules']['debug']['allowedIPs'] = ['*'];
 
@@ -72,8 +72,8 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-//        'allowedIPs' => ['1.*'],
-        'allowedIPs' => ['127.0.0.1', '172.10.0.254', '::1'],
+//        'allowedIPs' => ['*'],
+        'allowedIPs' => [ '91.106.201.242', '::1'],
     ];
 }
 
